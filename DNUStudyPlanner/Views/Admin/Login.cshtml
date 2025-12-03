@@ -1,0 +1,29 @@
+@model DNUStudyPlanner.Models.LoginViewModel
+@{ Layout = null; }
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="~/css/adminlogin.css" />
+</head>
+<body>
+<div class="login-container">
+    <form asp-controller="Admin" asp-action="Login" method="post">
+        <h2>ADMIN LOGIN</h2>
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        <div>
+            <label>Email</label>
+            <input asp-for="Email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div>
+            <label>Mật khẩu</label>
+            <input type="password" asp-for="Password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <button type="submit">Đăng nhập</button>
+    </form>
+</div>
+</body>
+</html>

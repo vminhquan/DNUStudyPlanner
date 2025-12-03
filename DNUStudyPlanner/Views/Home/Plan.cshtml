@@ -1,0 +1,67 @@
+@model List<DNUStudyPlanner.Models.StudyPlan>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Kế hoạch học tập</title>
+    <link rel="stylesheet" href="~/css/plan.css" />
+</head>
+<body>
+<div class="sidebar">
+    <h2>DNU Study Planner</h2>
+    <a href="/Home/Dashboard">🏠 Trang tổng quan</a>
+    <a href="/Home/Plan">📅 Kế hoạch học tập</a>
+    <a href="/Home/Profile">👤 Hồ sơ cá nhân</a>
+    <a href="/Home/MySubjects">📘 Môn học của tôi</a>
+    <a href="/Account/Login">🚪 Đăng xuất</a>
+</div>
+
+<div class="main-content">
+    <header class="main-header">
+        <h1>Kế hoạch học tập</h1>
+        <p>Quản lý và theo dõi lộ trình học tập của bạn.</p>
+        <a asp-controller="Home" asp-action="CreatePlan" class="btn-add-plan">+ Thêm Kế hoạch mới</a>
+    </header>
+
+    <section class="plan-list">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var plan in Model)
+            {
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <h3>@plan.Title</h3>
+                        <div class="plan-actions">
+                            <a asp-action="EditPlan" asp-route-id="@plan.Id" class="btn-edit">Sửa</a>
+                            <form asp-action="DeletePlan" method="post" style="display: inline;">
+                                <input type="hidden" name="id" value="@plan.Id" />
+                                <button type="submit" class="btn-delete" 
+                                        onclick="return confirm('Bạn có chắc chắn muốn xóa kế hoạch này?');">
+                                    Xóa
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <p><strong>Ghi chú:</strong> @plan.Notes</p>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: @plan.Progress%;">
+                            @plan.Progress%
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="no-plans-message">
+                <p>Bạn chưa có kế hoạch học tập nào. Hãy tạo một kế hoạch mới!</p>
+            </div>
+        }
+    </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+﻿@model List<DNUStudyPlanner.Models.Feature>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>DNU Study Planner</title>
+    <link rel="stylesheet" href="~/css/index.css" />
+</head>
+<body>
+<header>
+    <div class="header-container">
+        <img class="loGoDaiNam" src="/images/dainam.png" alt="Logo Đại Nam" />
+        <h1>HỌC TẬP THÔNG MINH VÀ CHINH PHỤC MỤC TIÊU<br /><span>DNU STUDY PLANNER</span></h1>
+    </div>
+</header>
+
+<div class="features">
+    @foreach (var feature in Model)
+    {
+        <div class="feature-box">
+            <h3>@feature.Title</h3>
+            <img src="/images/@feature.Image" alt="@feature.Title" />
+            <p>@feature.Description</p>
+        </div>
+    }
+</div>
+
+<div class="start-button">
+    <a href="/Account/Login">BẮT ĐẦU NGAY</a>
+</div>
+</body>
+</html>

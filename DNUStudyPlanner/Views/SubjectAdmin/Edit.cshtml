@@ -1,0 +1,81 @@
+@model DNUStudyPlanner.Models.Subject
+@{
+    ViewData["Title"] = "Sửa Môn học & Quản lý Chủ đề";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/subject-admin.css" />
+</head>
+<body>
+    <div class="sidebar">
+        <h2>DNU Admin</h2>
+        <a href="/Admin/Index">🔑 Quản lý User</a>
+        <a href="/SubjectAdmin/Index">📚 Quản lý Môn học</a>
+        <a href="/Admin/Login">🚪 Đăng xuất</a>
+    </div>
+
+    <div class="main-content">
+        <header class="main-header">
+            <h1>@Model.Name</h1>
+        </header>
+
+        <div class="content-form">
+            <!-- Phần 1: Form sửa thông tin môn học -->
+            <h2>Thông tin môn học</h2>
+            <form asp-action="Edit" method="post">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <input type="hidden" asp-for="Id" />
+
+                <div class="form-group">
+                    <label asp-for="SubjectCode">Mã môn học</label>
+                    <input asp-for="SubjectCode" class="form-control" />
+                    <span asp-validation-for="SubjectCode" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Name">Tên môn học</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Credits">Số tín chỉ</label>
+                    <input asp-for="Credits" type="number" class="form-control" />
+                    <span asp-validation-for="Credits" class="text-danger"></span>
+                </div>
+
+                <div class="button-group" style="justify-content: flex-start;">
+                    <button type="submit" class="btn btn-primary">Cập nhật thông tin</button>
+                </div>
+            </form>
+
+            <!-- Phần 2: Quản lý các chủ đề của môn học này -->
+            <div class="topic-management">
+                <h2>Các chủ đề/nội dung</h2>
+                <ul class="topic-list">
+                    @foreach (var topic in Model.Topics)
+                    {
+                        <li>
+                            <span>@topic.Title</span>
+                            <!-- Bạn sẽ cần tạo action cho nút xóa này -->
+                            <a href="#" class="delete-topic">Xóa</a>
+                        </li>
+                    }
+                </ul>
+                <!-- Form thêm chủ đề mới -->
+                <h3>Thêm chủ đề mới</h3>
+                <form asp-action="AddTopic" method="post" class="add-topic-form">
+                    <input type="hidden" name="subjectId" value="@Model.Id" />
+                    <input type="text" name="topicTitle" placeholder="Tên chủ đề/chương..." class="form-control" required />
+                    <button type="submit" class="btn btn-primary">Thêm</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

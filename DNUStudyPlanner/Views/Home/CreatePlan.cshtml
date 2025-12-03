@@ -1,0 +1,57 @@
+@model DNUStudyPlanner.Models.CreatePlanViewModel
+@{
+    ViewData["Title"] = "Tạo Kế hoạch mới";
+    Layout = null; 
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/createplan.css" />
+</head>
+<body>
+    <div class="sidebar">
+        <h2>DNU Study Planner</h2>
+        <a href="/Home/Dashboard">🏠 Trang tổng quan</a>
+        <a href="/Home/Plan">📅 Kế hoạch học tập</a>
+        <a href="/Home/Profile">👤 Hồ sơ cá nhân</a>
+        <a href="/Home/MySubjects">📘 Môn học của tôi</a>
+        <a href="/Account/Login">🚪 Đăng xuất</a>
+    </div>
+
+    <div class="main-content">
+        <header class="main-header">
+            <h1>Tạo Kế hoạch học tập mới</h1>
+            <p>Điền thông tin chi tiết cho kế hoạch của bạn.</p>
+        </header>
+
+        <form asp-action="CreatePlan" method="post" class="plan-form">
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                <label asp-for="Title">Tiêu đề</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Notes">Ghi chú</label>
+                <textarea asp-for="Notes" class="form-control" rows="4"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Progress">Tiến độ (%)</label>
+                <input asp-for="Progress" type="number" class="form-control" min="0" max="100" />
+                <span asp-validation-for="Progress" class="text-danger"></span>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn-save">Lưu Kế hoạch</button>
+                <a href="@Url.Action("Plan")" class="btn-cancel">Hủy</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

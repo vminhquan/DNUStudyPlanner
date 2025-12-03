@@ -1,0 +1,43 @@
+@model DNUStudyPlanner.Models.User
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Hồ sơ cá nhân</title>
+    <link rel="stylesheet" href="~/css/profile.css" />
+</head>
+<body>
+<div class="sidebar">
+    <h2>DNU Study Planner</h2>
+    <a href="/Home/Dashboard">🏠 Trang tổng quan</a>
+    <a href="/Home/Plan">📅 Kế hoạch học tập</a>
+    <a href="/Home/Profile">👤 Hồ sơ cá nhân</a>
+    <a href="/Home/MySubjects">📘 Môn học của tôi</a>
+    <a href="/Account/Login">🚪 Đăng xuất</a>
+</div>
+
+<div class="main-content">
+    <header class="main-header">
+        <h1>Hồ sơ cá nhân</h1>
+        <p>Thông tin người dùng và tuỳ chọn cập nhật hồ sơ.</p>
+    </header>
+
+    <section class="profile-box">
+        <div class="avatar">
+            <img src="/images/avatar.png" alt="Avatar người dùng" />
+        </div>
+        <div class="info">
+            <h2>@Model.FullName</h2>
+            <p><strong>Email:</strong> @Model.Email</p>
+            <p><strong>Ngày sinh:</strong> @Model.DateOfBirth.ToString("dd/MM/yyyy")</p>
+            <p><strong>Ngành học:</strong> @Model.Major</p>
+            <br>
+            <a asp-controller="Account" asp-action="EditProfile" class="edit-btn">Chỉnh sửa hồ sơ</a>
+        </div>
+    </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,104 @@
+@model DNUStudyPlanner.Models.MySubjectsViewModel
+@{
+    ViewData["Title"] = "Môn học của tôi";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/mysubjects.css" />
+</head>
+<body>
+    <div class="sidebar">
+        <h2>DNU Study Planner</h2>
+        <a href="/Home/Dashboard">🏠 Trang tổng quan</a>
+        <a href="/Home/Plan">📅 Kế hoạch học tập</a>
+        <a href="/Home/Profile">👤 Hồ sơ cá nhân</a>
+        <a href="/Home/MySubjects">📘 Môn học của tôi</a>
+        <a href="/Account/Login">🚪 Đăng xuất</a>
+    </div>
+
+    <div class="main-content">
+        <!-- Phần 1: Hiển thị các môn đã đăng ký -->
+        <header class="main-header">
+            <h1>@ViewData["Title"]</h1>
+            <p>Danh sách các môn học bạn đã đăng ký.</p>
+        </header>
+
+        <section class="plan-list" style="margin-bottom: 40px;">
+            @if (Model.EnrolledSubjects != null && Model.EnrolledSubjects.Any())
+            {
+                @foreach (var subject in Model.EnrolledSubjects)
+                {
+                    <div class="plan-card">
+                        <h3>@subject.Name (@subject.SubjectCode)</h3>
+                        <p><strong>Giảng viên:</strong> @subject.Instructor</p>
+                        <p><strong>Số tín chỉ:</strong> @subject.Credits</p>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="no-plans-message">
+                    <p>Bạn chưa đăng ký môn học nào.</p>
+                </div>
+            }
+        </section>
+
+        <!-- Phần 2: Bảng đăng ký môn học mới -->
+        <header class="main-header">
+            <h1>Đăng ký môn học</h1>
+            <p>Chọn các môn học bạn muốn tham gia trong kỳ này.</p>
+        </header>
+        
+        <table class="content-table">
+            <thead>
+                <tr>
+                    <th>Mã môn</th>
+                    <th>Tên môn</th>
+                    <th>Giảng viên</th>
+                    <th>Số tín chỉ</th>
+                    <th style="width: 15%;">Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.AllSubjects != null)
+                {
+                    @foreach (var subject in Model.AllSubjects)
+                    {
+                        <tr>
+                            <td>@subject.SubjectCode</td>
+                            <td>@subject.Name</td>
+                            <td>@subject.Instructor</td>
+                            <td>@subject.Credits</td>
+                            <td>
+                                @if (Model.EnrolledSubjects != null && Model.EnrolledSubjects.Any(s => s.Id == subject.Id))
+                                {
+                                    <!-- Đã đăng ký -> Hiển thị nút Hủy -->
+                                    <form asp-action="Unenroll" method="post">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="subjectId" value="@subject.Id" />
+                                        <button type="submit" class="btn btn-secondary">Hủy đăng ký</button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <!-- Chưa đăng ký -> Hiển thị nút Đăng ký -->
+                                    <form asp-action="Enroll" method="post">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="subjectId" value="@subject.Id" />
+                                        <button type="submit" class="btn btn-primary">Đăng ký</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

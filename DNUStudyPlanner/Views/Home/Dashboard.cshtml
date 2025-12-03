@@ -1,0 +1,73 @@
+@model DNUStudyPlanner.Models.DashboardViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tổng quan - DNU Study Planner</title>
+    <link rel="stylesheet" href="~/css/dashboard.css" />
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('active');
+        }
+    </script>
+</head>
+<body>
+
+<button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+
+<div class="sidebar">
+    <h2>DNU Study Planner</h2>
+    <a href="/Home/Dashboard">🏠 Trang tổng quan</a>
+    <a href="/Home/Plan">📅 Kế hoạch học tập</a>
+    <a href="/Home/Profile">👤 Hồ sơ cá nhân</a>
+    <a href="/Home/MySubjects">📘 Môn học của tôi</a>
+    <a href="/Account/Login">🚪 Đăng xuất</a>
+</div>
+
+<div class="main-content">
+    <header class="main-header">
+        <h1>Chào mừng trở lại, @Model.FullName!</h1>
+        <p>Hãy cùng xem tiến độ học tập của bạn hôm nay.</p>
+    </header>
+
+    <section class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-info">
+                <h2>Hoàn thành tuần này</h2>
+            </div>
+            <div class="stat-visual">
+                <div class="progress-circle" style="--progress-value: @Model.WeeklyCompletionPercentage">
+                    @Model.WeeklyCompletionPercentage%
+                </div>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-info">
+                <h2>Số giờ đã học (Tuần)</h2>
+            </div>
+            <div class="stat-visual">
+                <div class="progress-circle" style="--progress-value: @Model.WeeklyHoursPercentage">
+                    @Model.WeeklyHoursPercentage%
+                </div>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-info">
+                <h2>Nhiệm vụ quá hạn</h2>
+            </div>
+            <div class="stat-visual overdue">
+                <div class="value">@Model.OverdueTasksCount</div>
+            </div>
+        </div>
+    </section>
+    
+</div>
+
+</body>
+</html>

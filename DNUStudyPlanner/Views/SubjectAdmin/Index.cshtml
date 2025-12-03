@@ -1,0 +1,55 @@
+@model IEnumerable<DNUStudyPlanner.Models.Subject>
+@{
+    ViewData["Title"] = "Quản lý Môn học";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/subject-admin.css" />
+</head>
+<body>
+<div class="sidebar">
+    <h2>DNU Study Planner Admin</h2>
+    <a href="/Admin/Index">🔑 Quản lý User</a>
+    <a href="/SubjectAdmin/Index">📚 Quản lý Môn học</a>
+    <a href="/Account/Logout">🚪 Đăng xuất</a>
+</div>
+
+<div class="main-content">
+    <header class="main-header">
+        <h1>@ViewData["Title"]</h1>
+        <a asp-action="Create" class="btn btn-primary">+ Thêm Môn học mới</a>
+    </header>
+
+    <table class="content-table">
+        <thead>
+        <tr>
+            <th>Mã môn</th>
+            <th>Tên môn</th>
+            <th>Số tín chỉ</th>
+            <th>Giảng viên</th>
+            <th>Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.SubjectCode</td>
+                <td>@item.Name</td>
+                <td>@item.Credits</td>
+                <td>@item.Instructor</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Sửa & Quản lý Chủ đề</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

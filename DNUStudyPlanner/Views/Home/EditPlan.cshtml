@@ -1,0 +1,61 @@
+@model DNUStudyPlanner.Models.EditPlanViewModel
+@{
+    Layout = null;
+    ViewData["Title"] = "Chỉnh sửa Kế hoạch";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/createplan.css" />
+</head>
+<body>
+    <div class="sidebar">
+        <h2>DNU Study Planner</h2>
+        <a href="/Home/Dashboard">🏠 Trang tổng quan</a>
+        <a href="/Home/Plan">📅 Kế hoạch học tập</a>
+        <a href="/Home/Profile">👤 Hồ sơ cá nhân</a>
+        <a href="/Home/MySubjects">📘 Môn học của tôi</a>
+        <a href="/Account/Login">🚪 Đăng xuất</a>
+    </div>
+
+    <div class="main-content">
+        <header class="main-header">
+            <h1>Chỉnh sửa Kế hoạch học tập</h1>
+            <p>Cập nhật thông tin chi tiết cho kế hoạch của bạn.</p>
+        </header>
+
+        <form asp-action="EditPlan" method="post" class="plan-form">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="UserId" />
+
+            <div class="form-group">
+                <label asp-for="Title">Tiêu đề</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Notes">Ghi chú</label>
+                <textarea asp-for="Notes" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Progress">Tiến độ (%)</label>
+                <input asp-for="Progress" type="number" class="form-control" min="0" max="100" />
+                <span asp-validation-for="Progress" class="text-danger"></span>
+            </div>
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            <div class="button-group">
+                <a href="@Url.Action("Plan", "Home")" class="btn-cancel">Hủy</a>
+                <button type="submit" class="btn-save">Cập nhật</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

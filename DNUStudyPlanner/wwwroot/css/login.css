@@ -1,0 +1,133 @@
+body {
+    background: url('/images/awvhf0v6rp9vsfk4l4gi20230717030908_thump.jpg') no-repeat center center;
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background-color: #ff7b5a;
+    color: white;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-bottom: 4px solid #f2573a;
+}
+
+header img.loGoDaiNam {
+    width: 80px;
+    height: auto;
+}
+
+header h1 {
+    font-size: 22px;
+    line-height: 1.4;
+    font-weight: bold;
+    margin: 0;
+}
+
+header h1 span {
+    color: red;
+}
+.login-container {
+    background: rgba(255, 255, 255, 0.96);
+    width: 420px;
+    margin: 60px auto;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    text-align: center;
+}
+
+.login-container h2 {
+    font-size: 28px;
+    color: #ff7b5a;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.login-container label {
+    display: block;
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-left: 5px;
+}
+
+.login-container input[type="email"],
+.login-container input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+    border: 0.5px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.btn-login,
+.btn-register {
+    flex: 1;
+    padding: 10px 0;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    transition: 0.3s ease;
+}
+
+.btn-login {
+    background-color: #008CFF;
+    text-decoration: none;
+}
+
+.btn-login:hover {
+    background-color: #0066cc;
+}
+
+.btn-register {
+    background-color: #ff7b5a;
+    text-decoration: none;
+}
+
+.btn-register:hover {
+    background-color: #e25a3f;
+}
+
+.forgot-password {
+    margin-top: 5px;
+}
+
+.forgot-password a {
+    color: red;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.forgot-password a:hover {
+    text-decoration: none;
+}
+.checkbox-container{
+    margin-top: 20px;
+    display: flex;
+}

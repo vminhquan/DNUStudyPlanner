@@ -1,0 +1,60 @@
+@model DNUStudyPlanner.Models.EditProfileViewModel
+@{
+    Layout = null;
+    ViewData["Title"] = "Chỉnh sửa Hồ sơ";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/createplan.css" />
+</head>
+<body>
+    <div class="sidebar">
+        <h2>DNU Study Planner</h2>
+        <a href="/Home/Dashboard">🏠 Trang tổng quan</a>
+        <a href="/Home/Plan">📅 Kế hoạch học tập</a>
+        <a href="/Home/Profile">👤 Hồ sơ cá nhân</a>
+        <a href="/Home/MySubjects">📘 Môn học của tôi</a>
+        <a href="/Account/Login">🚪 Đăng xuất</a>
+    </div>
+
+    <div class="main-content">
+        <header class="main-header">
+            <h1>Chỉnh sửa Hồ sơ</h1>
+            <p>Cập nhật thông tin cá nhân của bạn.</p>
+        </header>
+
+        <form asp-action="EditProfile" method="post" class="plan-form">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group">
+                <label asp-for="FullName">Họ và tên</label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DateOfBirth">Ngày sinh</label>
+                <input asp-for="DateOfBirth" class="form-control" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Major">Chuyên ngành</label>
+                <input asp-for="Major" class="form-control" />
+                <span asp-validation-for="Major" class="text-danger"></span>
+            </div>
+
+            <div class="button-group">
+                <a href="@Url.Action("Profile", "Home")" class="btn-cancel">Hủy</a>
+                <button type="submit" class="btn-save">Lưu thay đổi</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

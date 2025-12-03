@@ -1,0 +1,58 @@
+@model List<DNUStudyPlanner.Models.User>
+@{ Layout = null; ViewData["Title"] = "Quản lý Người dùng"; }
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/admin.css" />
+</head>
+<body>
+<div class="sidebar">
+    <h2 class="fw-bold">DNU Study Planner Admin</h2>
+    <a href="/Admin/Index">🔑 Quản lý User</a>
+    <a href="/SubjectAdmin/Index">📚 Quản lý Môn học</a>
+    <a href="/Admin/Login">🚪 Đăng xuất</a>
+</div>
+<div class="main-content">
+    <header class="main-header">
+        <h1 class="fw-bold">@ViewData["Title"]</h1>
+    </header>
+    
+    <table class="user-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Họ tên</th>
+            <th>Email</th>
+            <th>Vai trò</th>
+            <th>Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.FullName</td>
+                <td>@user.Email</td>
+                <td>@user.Role</td>
+                <td>
+                    <div class="action-links">
+                        <a asp-action="Edit" asp-route-id="@user.Id" class="btn-primary">Sửa</a>
+                        <form asp-action="Delete" method="post" style="display: inline;">
+                            <input type="hidden" name="id" value="@user.Id" />
+                            <button type="submit" class="btn-danger" 
+                                    onclick="return confirm('Bạn có chắc chắn muốn xóa kế hoạch này?');">
+                                Xóa
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+@model DNUStudyPlanner.Models.VerifyOtpViewModel
+
+@{
+    ViewData["Title"] = "Xác minh Mã OTP";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/forgot.css" /> 
+    <style>
+        body {
+            background: url("/images/awvhf0v6rp9vsfk4l4gi20230717030908_thump.jpg") no-repeat center center;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .forgot-password-page {
+             padding-top: 50px;
+        }
+    </style>
+}
+
+<header>
+        <div class="header-container">
+            <div style="text-align: center;"><img class="loGoDaiNam" src="/images/dainam.png" alt="Logo Đại Nam" /></div>
+            <div>
+                <h1 class="fw-bold">HỌC TẬP THÔNG MINH VÀ CHINH PHỤC MỤC TIÊU <br/> <span style="color:red">DNU STUDY PLANNER</span></h1>
+            </div>
+
+        </div>
+    
+</header>
+
+<div class="forgot-password-page">
+    <div class="forgot-container">
+        <h2>XÁC MINH MÃ OTP</h2>
+        <p class="subtitle">Mã xác minh đã được gửi đến email của bạn. Vui lòng kiểm tra email và nhập mã dưới đây.</p>
+
+        <form asp-action="VerifyOtp" asp-controller="Account" method="post">
+            
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="Email" />
+
+            <label asp-for="Otp">Mã OTP</label>
+            <input asp-for="Otp" 
+                   type="text" 
+                   class="form-control"
+                   placeholder="Nhập mã 6 chữ số..." 
+                   required
+                   maxlength="6"/>
+            <span asp-validation-for="Otp" class="text-danger"></span>
+            <br>
+
+            <div class="button-group">
+                <button type="submit" class="btn-login">Xác nhận</button>
+                <a href="@Url.Action("Login", "Account")" class="btn-cancel">Huỷ</a>
+            </div>
+            
+            <div class="mt-3">
+                <a asp-action="ResendOtp" asp-controller="Account" asp-route-email="@Model.Email">Chưa nhận được mã? Gửi lại</a>
+            </div>
+        </form>
+
+        <div class="forgot-password mt-3">
+            <a asp-action="Login" asp-controller="Account">Quay lại đăng nhập</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

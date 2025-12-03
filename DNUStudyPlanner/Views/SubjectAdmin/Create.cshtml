@@ -1,0 +1,62 @@
+@model DNUStudyPlanner.Models.Subject
+@{
+    ViewData["Title"] = "Tạo Môn học mới";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/subject-admin.css" />
+</head>
+<body>
+    <div class="sidebar">
+        <h2>DNU Study Planner Admin</h2>
+        <a href="/Admin/Index">🔑 Quản lý User</a>
+        <a href="/SubjectAdmin/Index">📚 Quản lý Môn học</a>
+        <a href="/Account/Logout">🚪 Đăng xuất</a>
+    </div>
+
+    <div class="main-content">
+        <header class="main-header">
+            <h1>@ViewData["Title"]</h1>
+        </header>
+
+        <div class="content-form">
+            <form asp-action="Create" method="post">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    <label asp-for="SubjectCode">Mã môn học</label>
+                    <input asp-for="SubjectCode" class="form-control" />
+                    <span asp-validation-for="SubjectCode" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Name">Tên môn học</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Credits">Số tín chỉ</label>
+                    <input asp-for="Credits" type="number" class="form-control" />
+                    <span asp-validation-for="Credits" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label asp-for="Instructor">Giảng viên</label>
+                    <input asp-for="Instructor" class="form-control" />
+                </div>
+                
+                <div class="button-group" style="justify-content: flex-start; margin-top: 20px;">
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

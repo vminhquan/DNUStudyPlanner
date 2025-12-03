@@ -1,0 +1,198 @@
+body {
+    background: url('/images/awvhf0v6rp9vsfk4l4gi20230717030908_thump.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar {
+    width: 240px;
+    background-color: #ffffff;
+    height: 100vh;
+    padding: 30px 20px;
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    z-index: 1000;
+}
+
+.sidebar h2 {
+    color: #ff7b5a;
+    font-size: 22px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #ff7b5a;
+    color: white;
+}
+
+
+.main-content {
+    margin: 30px auto; 
+    margin-left: 280px;  
+    padding: 30px;
+    flex-grow: 1;
+    max-width: 1200px;
+}
+
+.main-header {
+    background-color: #ff7b5a;
+    color: white;
+    padding: 25px 30px;
+    text-align: left;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.main-header h1 {
+    font-size: 28px;
+    margin: 0;
+}
+
+.main-header p {
+    font-size: 16px;
+    color: #fceae6;
+    margin: 5px 0 0 0;
+}
+
+.btn-add-plan {
+    position: absolute;
+    top: 50%;
+    right: 30px;
+    transform: translateY(-50%);
+    padding: 10px 25px;
+    background-color: #ffffff;
+    color: #ff7b5a;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.btn-add-plan:hover {
+    background-color: #fff0eb;
+    transform: translateY(-50%) scale(1.05);
+}
+
+.plan-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.no-plans-message {
+    padding: 40px;
+    text-align: center;
+    border-radius: 12px;
+    background-color: #f9f9f9;
+}
+
+.no-plans-message p {
+    margin: 0;
+    font-size: 16px;
+    color: #555;
+}
+
+.plan-card {
+    background: #ffffff; 
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.plan-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.plan-card h3 {
+    margin: 0 0 15px 0;
+    color: #ff7b5a;
+}
+
+.plan-card p {
+    margin: 0 0 20px 0;
+    color: #555;
+    line-height: 1.6;
+}
+
+.progress-bar-container {
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    height: 20px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.progress-bar {
+    background-color: #4CAF50;
+    height: 100%;
+    color: white;
+    text-align: center;
+    line-height: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 10px 0 0 10px;
+    transition: width 0.5s ease-in-out;
+}
+.plan-card .plan-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.plan-card h3 {
+    margin: 0;
+}
+
+.btn-edit {
+    background-color: #ffc107;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.btn-edit:hover {
+    background-color: #e0a800;
+}
+.plan-actions {
+    display: flex;
+    gap: 10px; /* Khoảng cách giữa các nút */
+}
+
+.btn-delete {
+    background-color: #dc3545; /* Màu đỏ */
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+}

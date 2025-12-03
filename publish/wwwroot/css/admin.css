@@ -1,0 +1,102 @@
+
+
+body {
+    background: url('/images/awvhf0v6rp9vsfk4l4gi20230717030908_thump.jpg')no-repeat center center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.sidebar {
+    width: 240px;
+    background-color: #ffffff;
+    height: 100vh;
+    padding: 30px 20px;
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.08);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+}
+
+.sidebar h2 {
+    color: #ff7b5a;
+    font-size: 22px;
+    margin: 0 0 40px 0;
+    text-align: center;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    padding: 12px 15px;
+    display: block;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #ff7b5a;
+    color: white;
+}
+
+.main-content {
+    margin-left: 260px;
+    flex: 1;
+    padding: 30px;
+}
+
+.main-header {
+    background-color: #fff;
+    padding: 20px 30px 20px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.main-header h1 {
+    font-size: 28px;
+    color: #ff7b5a;
+    margin: 0;
+}
+
+/* Style cho bảng danh sách người dùng */
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden; /* Giúp bo góc cho bảng */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.user-table th, .user-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.user-table thead th {
+    background-color: #f8f9fa;
+    font-size: 14px;
+    color: #333;
+    text-transform: uppercase;
+}
+
+.user-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.action-links a {
+    text-decoration: none;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+

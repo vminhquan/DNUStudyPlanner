@@ -1,0 +1,146 @@
+
+body {
+    background: url('/images/awvhf0v6rp9vsfk4l4gi20230717030908_thump.jpg') no-repeat center center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.sidebar {
+    width: 240px;
+    background-color: #ffffff;
+    height: 100vh;
+    padding: 30px 20px;
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.08);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+}
+
+.sidebar h2 {
+    color: #ff7b5a;
+    font-size: 22px;
+    margin: 0 0 40px 0;
+    text-align: center;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    padding: 12px 15px;
+    display: block;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #ff7b5a;
+    color: white;
+}
+
+.main-content {
+    margin-left: 260px;
+    flex: 1;
+    padding: 30px;
+}
+
+.main-header {
+    background-color: #fff;
+    padding: 20px 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-header h1 {
+    font-size: 28px;
+    color: #ff7b5a;
+    margin: 0;
+}
+
+/* === STYLE CHO BẢNG & FORM === */
+.content-table, .content-form {
+    width: 100%;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.content-table {
+    border-collapse: collapse;
+    padding: 0; /* Bảng không cần padding ngoài */
+}
+.content-table th, .content-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+.content-table thead th {
+    background-color: #f8f9fa;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+.form-group .form-control {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+/* === NÚT BẤM === */
+.btn {
+    padding: 10px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.3s;
+}
+.btn-primary { background-color: #ff7b5a; }
+.btn-secondary { background-color: #6c757d; }
+
+/* === QUẢN LÝ CHỦ ĐỀ (TOPIC) === */
+.topic-management {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid #eee;
+}
+.topic-list {
+    list-style: none;
+    padding: 0;
+}
+.topic-list li {
+    padding: 10px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.add-topic-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+.add-topic-form input[type="text"] {
+    flex-grow: 1;
+}
