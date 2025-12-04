@@ -5,19 +5,6 @@ using DotNetEnv;
 using DNUStudyPlanner.Configuration;
 Env.Load(); 
 var builder = WebApplication.CreateBuilder(args); 
-var emailCheck = builder.Configuration["SmtpSettings:SmtpMailEmail"];
-
-// Nếu giá trị là NULL, chứng tỏ file .env CHƯA ĐƯỢC ĐỌC hoặc TÊN BIẾN SAI
-if (string.IsNullOrEmpty(emailCheck))
-{
-    // Thêm một điểm dừng (Breakpoint) ở đây để kiểm tra trong debug
-    System.Console.WriteLine("LỖI CẤU HÌNH: SmtpMailEmail vẫn là NULL!"); 
-    // Hoặc tạm thời gán một giá trị hardcode để ứng dụng chạy (chỉ để test)
-}
-
-builder.Services.Configure<DNUStudyPlanner.Configuration.SmtpSettings>(
-    builder.Configuration.GetSection("SmtpSettings"));
-// ...
 builder.Services.Configure<SmtpSettings>(
     builder.Configuration.GetSection("SmtpSettings"));
 builder.Services.AddDbContext<ApplicationDbContext>(options => 
