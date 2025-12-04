@@ -1,20 +1,32 @@
-namespace DNUStudyPlanner.Services;
 using System.Net.Mail;
 using System.Net;
+using Microsoft.Extensions.Options; // Cần thêm namespace này
+using DNUStudyPlanner.Configuration; // Cần thêm namespace này (hoặc đường dẫn của SmtpSettings)
+
+namespace DNUStudyPlanner.Services;
+
 public class EmailSender : IEmailSender
 {
+    private readonly SmtpSettings _smtpSettings;
+    
+    public EmailSender(IOptions<SmtpSettings> smtpSettings)
+    {
+        _smtpSettings = smtpSettings.Value;
+    }
+
     public async Task SendEmailAsync(string email, string subject, string message)
     {
         var mail = new MailMessage();
-        mail.From = new MailAddress("quanrip113@gmail.com", "DNU Study Planner"); // Địa chỉ email gửi đi
+        
+        mail.From = new MailAddress(_smtpSettings.SmtpMailEmail!, "DNU Study Planner"); 
         mail.To.Add(email);
         mail.Subject = subject;
         mail.Body = message;
-        mail.IsBodyHtml = true; // Cho phép nội dung email có định dạng HTML
-
-        using (var smtpClient = new SmtpClient("smtp.gmail.com", 587)) // Thay bằng host và port của bạn
+        mail.IsBodyHtml = true; 
+        
+        using (var smtpClient = new SmtpClient(_smtpSettings.SmtpHost!, _smtpSettings.SmtpPort)) 
         {
-            smtpClient.Credentials = new NetworkCredential("quanrip113@gmail.com", "fbioklatwckerbec"); 
+            smtpClient.Credentials = new NetworkCredential(_smtpSettings.SmtpMailEmail, _smtpSettings.SmtpMailPassword); 
             smtpClient.EnableSsl = true; 
             await smtpClient.SendMailAsync(mail);
         }
