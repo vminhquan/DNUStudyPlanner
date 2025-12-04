@@ -521,3 +521,5 @@
 /Volumes/Data/backEnd/DNUStudyPlanner/DNUStudyPlanner/obj/Debug/net8.0/DNUStudyPlanner.genruntimeconfig.cache
 /Volumes/Data/backEnd/DNUStudyPlanner/DNUStudyPlanner/obj/Debug/net8.0/ref/DNUStudyPlanner.dll
 /Volumes/Data/backEnd/DNUStudyPlanner/DNUStudyPlanner/obj/Debug/net8.0/DNUStudyPlanner.sourcelink.json
+/Volumes/Data/backEnd/DNUStudyPlanner/DNUStudyPlanner/bin/Debug/net8.0/DotNetEnv.dll
+/Volumes/Data/backEnd/DNUStudyPlanner/DNUStudyPlanner/bin/Debug/net8.0/Sprache.dll

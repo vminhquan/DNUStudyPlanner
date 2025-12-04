@@ -1,7 +1,7 @@
 using System.Net.Mail;
 using System.Net;
-using Microsoft.Extensions.Options; // Cần thêm namespace này
-using DNUStudyPlanner.Configuration; // Cần thêm namespace này (hoặc đường dẫn của SmtpSettings)
+using Microsoft.Extensions.Options;
+using DNUStudyPlanner.Configuration; 
 
 namespace DNUStudyPlanner.Services;
 
