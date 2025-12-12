@@ -108,8 +108,7 @@ namespace DNUStudyPlanner.Controllers
                 // Thêm vào DbContext và lưu vào database
                 _context.StudyPlans.Add(newPlan);
                 await _context.SaveChangesAsync();
-
-                // Sau khi lưu thành công, chuyển hướng về trang danh sách kế hoạch
+                
                 return RedirectToAction("Plan");
             }
 
@@ -161,7 +160,6 @@ namespace DNUStudyPlanner.Controllers
                 return RedirectToAction(nameof(Plan));
             }
 
-            // Nếu không hợp lệ, trả về view với viewModel
             return View(viewModel);
         }
 
@@ -173,7 +171,7 @@ namespace DNUStudyPlanner.Controllers
             var studyPlan = await _context.StudyPlans.FindAsync(id);
             if (studyPlan == null)
             {
-                return NotFound(); // Nếu không tìm thấy, báo lỗi
+                return NotFound(); 
             }
 
             // Xóa kế hoạch khỏi DbContext

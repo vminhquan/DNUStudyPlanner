@@ -31,7 +31,7 @@ namespace DNUStudyPlanner.Controllers
                 var user = await _context.Users
                     .FirstOrDefaultAsync(u => u.Email == model.Email && u.Role == "Admin");
 
-                if (user != null && user.Password == model.Password) // chưa hash password
+                if (user != null && user.Password == model.Password) 
                 {
                     HttpContext.Session.SetInt32("UserId", user.Id);
                     HttpContext.Session.SetString("UserRole", user.Role);

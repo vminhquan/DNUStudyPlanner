@@ -28,11 +28,9 @@ namespace DNUStudyPlanner.Controllers
         [ValidateAntiForgeryToken] // biện pháp bảo mật quan trọng của ASP.NET Core, giúp ngăn chặn tấn công Cross-Site Request Forgery (CSRF)
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid) // Kiểm tra xem dữ liệu trong model có hợp lệ theo các Data Annotations (như [Required],
-                                    // [EmailAddress]) đã được định nghĩa trong RegisterViewModel hay không
+            if (ModelState.IsValid) // Kiểm tra xem dữ liệu trong model có hợp lệ theo các Data Annotations.
             {
                 var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
-                // Kiểm tra xem đã có người dùng nào sử dụng Email này chưa
                 if (existingUser != null)
                 {
                     ModelState.AddModelError("Email", "Email này đã được sử dụng.");
@@ -51,7 +49,6 @@ namespace DNUStudyPlanner.Controllers
 
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync(); // Thực thi lệnh INSERT vào cơ sở dữ liệu
-
                 return RedirectToAction("Login");
             }
             return View(model);
@@ -71,8 +68,6 @@ namespace DNUStudyPlanner.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
-
-                // THAY ĐỔI 2: So sánh mật khẩu trực tiếp, không dùng Verify
                 if (user != null && user.Password == model.Password)
                 {
                     // Lưu ID người dùng vào Session để duy trì trạng thái đăng nhập.
@@ -80,55 +75,64 @@ namespace DNUStudyPlanner.Controllers
                     // Chuyển hướng đến trang Dashboard
                     return RedirectToAction("Dashboard", "Home");
                 }
-
                 ModelState.AddModelError(string.Empty, "Email hoặc mật khẩu không chính xác.");
             }
 
             return View(model);
         }
-        
-        // Inject dịch vụ email
 
-       
         // GET: /Account/ForgotPassword
         public IActionResult ForgotPassword()
         {
             return View();
         }
-        // POST: /Account/ForgotPassword (Xử lý yêu cầu gửi OTP)
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+       // POST: /Account/ForgotPassword
+[HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+{
+    if (ModelState.IsValid)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+    
+        // Trả về thông báo thành công giả để tránh tiết lộ email nào tồn tại.
+        if (user != null)
         {
-            if (ModelState.IsValid)
+            /// 1. Tạo và Lưu Mã OTP (Vẫn phải chờ lưu DB xong mới được đi tiếp)
+            string otp = new Random().Next(100000, 999999).ToString(); 
+            user.OtpCode = otp;
+            user.OtpExpiryTime = DateTime.UtcNow.AddMinutes(5);
+            await _context.SaveChangesAsync();
+    
+            // 2. Gửi Email (CHẠY NGẦM - KHÔNG CHỜ)
+            string messageBody = $"<h3>Mã Đặt lại Mật khẩu</h3>" +
+                                    $"<p>Chào bạn {user.FullName},</p>" +
+                                    $"<p>Mã OTP của bạn là: <b>{otp}</b></p>" +
+                                    $"<p>Vui lòng nhập mã này vào trang xác minh. Mã sẽ hết hạn sau 5 phút.</p>";
+            
+            string emailTo = user.Email;
+            Task.Run(async () => 
             {
-                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
-            
-                // **Luôn trả về thông báo thành công giả** để tránh tiết lộ email nào tồn tại.
-                if (user != null)
+                try 
                 {
-                    /// 1. Tạo và Lưu Mã OTP (như đã giải thích ở mục 1)
-                    string otp = new Random().Next(100000, 999999).ToString(); 
-                    user.OtpCode = otp;
-                    user.OtpExpiryTime = DateTime.UtcNow.AddMinutes(5);
-                    await _context.SaveChangesAsync();
-            
-                    // 2. Gửi Email
-                    string messageBody = $"<h3>Mã Đặt lại Mật khẩu</h3>" +
-                                         $"<p>Chào bạn {user.FullName},</p>" +
-                                         $"<p>Mã OTP của bạn là: <b>{otp}</b></p>" +
-                                         $"<p>Vui lòng nhập mã này vào trang xác minh. Mã sẽ hết hạn sau 5 phút.</p>";
-
-                    await _emailSender.SendEmailAsync(user.Email, "Mã Xác minh Đặt lại Mật khẩu", messageBody); 
-
-                    // 3. Chuyển hướng đến trang xác minh
-                    return RedirectToAction("VerifyOtp", new { email = user.Email });
+                    await _emailSender.SendEmailAsync(emailTo, "Mã Xác minh Đặt lại Mật khẩu", messageBody); 
                 }
-                // Trả về thông báo thành công giả để không tiết lộ email tồn tại
-                return RedirectToAction("VerifyOtp", new { email = model.Email });
-            }
-            return View(model);
+                catch (Exception ex)
+                {
+                    // Ghi log lỗi vào Console của VPS để debug nếu mail không đi
+                    Console.WriteLine($"Lỗi gửi mail ngầm (ForgotPass): {ex.Message}");
+                }
+            });
+            // -------------------------
+
+            // 3. Chuyển hướng NGAY LẬP TỨC
+            return RedirectToAction("VerifyOtp", new { email = user.Email });
         }
+        
+        return RedirectToAction("VerifyOtp", new { email = model.Email });
+    }
+    return View(model);
+}
         public IActionResult VerifyOtp(string email)
         {
             // Truyền email ẩn đi để form POST có thể dùng lại
@@ -150,9 +154,8 @@ namespace DNUStudyPlanner.Controllers
                     user.OtpCode = null; // Vô hiệu hóa OTP sau khi dùng
                     user.OtpExpiryTime = null; 
                     await _context.SaveChangesAsync(); 
-            
-                    // Lưu email vào Session với một khóa an toàn (ResetToken)
-                    // hoặc chuyển hướng kèm theo một token reset được mã hóa.
+                    //lưu Email vào Session, Controller của Action ResetPassword (GET) có thể kiểm tra xem
+                    //người dùng đã hoàn thành bước OTP hay chưa trước khi hiển thị form đặt lại mật khẩu.
                     HttpContext.Session.SetString("ResetTokenEmail", model.Email);
             
                     // Chuyển hướng đến trang đặt lại mật khẩu
@@ -168,36 +171,49 @@ namespace DNUStudyPlanner.Controllers
         {
             if (string.IsNullOrEmpty(email))
             {
-                return RedirectToAction("ForgotPassword"); // Nếu không có email, quay lại yêu cầu
+                return RedirectToAction("ForgotPassword");
             }
 
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-    
+
             if (user != null)
             {
-                // 1. TẠO MÃ OTP MỚI VÀ LƯU VÀO DB (Copy logic từ ForgotPassword/POST)
+                // 1. TẠO MÃ OTP MỚI VÀ LƯU VÀO DB 
                 string otp = new Random().Next(100000, 999999).ToString(); 
                 user.OtpCode = otp;
                 user.OtpExpiryTime = DateTime.UtcNow.AddMinutes(5);
                 await _context.SaveChangesAsync();
 
-                // 2. GỬI EMAIL MỚI
+                // 2. GỬI EMAIL MỚI (CHẠY NGẦM)
                 string messageBody = $"<h3>Mã Đặt lại Mật khẩu</h3>" +
                                      $"<p>Mã OTP MỚI của bạn là: <b>{otp}</b></p>";
-                await _emailSender.SendEmailAsync(user.Email, "Mã Xác minh MỚI", messageBody);
+        
+                // --- ĐOẠN CODE SỬA ĐỔI ---
+                string emailTo = user.Email;
+                Task.Run(async () => 
+                {
+                    try 
+                    {
+                        await _emailSender.SendEmailAsync(emailTo, "Mã Xác minh MỚI", messageBody);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Lỗi gửi mail ngầm (Resend): {ex.Message}");
+                    }
+                });
+                // -------------------------
 
-                // 3. Chuyển hướng lại trang xác minh
-                TempData["SuccessMessage"] = "Mã xác minh mới đã được gửi đến email của bạn.";
+                // 3. Chuyển hướng NGAY LẬP TỨC
+                TempData["SuccessMessage"] = "Mã xác minh mới đang được gửi đến email của bạn.";
                 return RedirectToAction("VerifyOtp", new { email = user.Email });
             }
-
-            // Nếu không tìm thấy user (tránh tiết lộ thông tin)
+    
             return RedirectToAction("VerifyOtp", new { email = email });
         }
         // GET: /Account/ResetPassword
         public IActionResult ResetPassword()
         {
-            // Kiểm tra session token để đảm bảo người dùng đã qua bước VerifyOtp
+            // đảm bảo người dùng đã qua bước VerifyOtp
             if (HttpContext.Session.GetString("ResetTokenEmail") == null)
             {
                 return RedirectToAction("ForgotPassword");
@@ -222,8 +238,7 @@ namespace DNUStudyPlanner.Controllers
 
             if (user != null)
             {
-                // 1. Cập nhật Mật khẩu (Quan trọng: Trong thực tế, bạn phải HASH mật khẩu)
-                // Dựa trên code cũ của bạn (so sánh trực tiếp), ta gán thẳng:
+                // 1. Cập nhật Mật khẩu 
                 user.Password = model.NewPassword; 
         
                 // 2. Vô hiệu hóa token/session
@@ -236,7 +251,7 @@ namespace DNUStudyPlanner.Controllers
                 return RedirectToAction("Login");
             }
 
-            // Nếu không tìm thấy user (rất hiếm khi xảy ra ở đây), chuyển hướng về login
+            // Nếu không tìm thấy user, chuyển hướng về login
             return RedirectToAction("Login");
         }
         // POST: /Account/Logout
@@ -250,7 +265,7 @@ namespace DNUStudyPlanner.Controllers
         public async Task<IActionResult> EditProfile()
         {
             var userId = HttpContext.Session.GetInt32("UserId"); // Dữ nguyên trạng thái đăng nhập của người dùng
-                                                                         // lấy giá trị số nguyên (ID người dùng) được lưu trữ với khóa là "UserId".
+                                                                        
             if (userId == null)
             {
                 return RedirectToAction("Login"); // Tải lại trang Login
@@ -270,7 +285,6 @@ namespace DNUStudyPlanner.Controllers
                 DateOfBirth = user.DateOfBirth,
                 Major = user.Major
             };
-
             return View(viewModel);
         }
         

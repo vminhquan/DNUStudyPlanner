@@ -1,4 +1,3 @@
-// DNUStudyPlanner/Controllers/SubjectAdminController.cs
 using DNUStudyPlanner.Data;
 using DNUStudyPlanner.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -48,14 +47,13 @@ namespace DNUStudyPlanner.Controllers
         }
 
         // GET: /SubjectAdmin/Edit/5
-        // Trang Edit sẽ là nơi quản lý cả chủ đề (Topic)
         public async Task<IActionResult> Edit(int? id)
         {
             if (!IsAdmin()) return RedirectToAction("Login", "Admin");
             if (id == null) return NotFound();
 
             var subject = await _context.Subjects
-                .Include(s => s.Topics) // Quan trọng: Lấy cả các chủ đề liên quan
+                .Include(s => s.Topics) 
                 .FirstOrDefaultAsync(s => s.Id == id);
                 
             if (subject == null) return NotFound();
@@ -93,7 +91,5 @@ namespace DNUStudyPlanner.Controllers
             }
             return RedirectToAction("Edit", new { id = subjectId });
         }
-
-        // Tương tự, bạn có thể thêm các action để Sửa/Xóa Topic
     }
 }
