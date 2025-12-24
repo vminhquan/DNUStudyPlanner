@@ -104,7 +104,7 @@ public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
             user.OtpExpiryTime = DateTime.UtcNow.AddMinutes(5);
             await _context.SaveChangesAsync();
     
-            // 2. Gửi Email (CHẠY NGẦM - KHÔNG CHỜ)
+            // 2. Gửi Email
             string messageBody = $"<h3>Mã Đặt lại Mật khẩu</h3>" +
                                     $"<p>Chào bạn {user.FullName},</p>" +
                                     $"<p>Mã OTP của bạn là: <b>{otp}</b></p>" +
